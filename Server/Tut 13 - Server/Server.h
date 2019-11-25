@@ -34,6 +34,7 @@ private: //Private functions
 	void SendString(std::shared_ptr<Connection> connection, const std::string & str);
 	bool GetString(std::shared_ptr<Connection> connection, std::string & str);
 	bool ProcessPacket(std::shared_ptr<Connection> connection, PacketType packetType);
+	std::string addId(int id, std::string message);
 	static void ClientHandlerThread(Server & server, std::shared_ptr<Connection> connection);
 	static void PacketSenderThread(Server & server); 
 	void DisconnectClient(std::shared_ptr<Connection> connection); //Called to properly disconnect and clean up a client (if possible)

@@ -148,7 +148,7 @@ void Dot::render(SDL_Renderer *gRenderer)
 
 std::string Dot::GetPosAsString()
 {
-	return std::string("X: "+ std::to_string(mPosX) + ", " + "Y: " + std::to_string(mPosY));
+	return std::string("X:"+ std::to_string(mPosX) + "," + "Y:" + std::to_string(mPosY));
 }
 
 int Dot::GetCenterX()
