@@ -5,51 +5,19 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
+#include <iostream>
 #include <string>
 #include "LTexture.h";
 #include "Dot.h";
+#include "Client.h";
 
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-
-//The application time based timer
-class LTimer
-{
-    public:
-		//Initializes variables
-		LTimer();
-
-		//The various clock actions
-		void start();
-		void stop();
-		void pause();
-		void unpause();
-
-		//Gets the timer's time
-		Uint32 getTicks();
-
-		//Checks the status of the timer
-		bool isStarted();
-		bool isPaused();
-
-    private:
-		//The clock time when the timer started
-		Uint32 mStartTicks;
-
-		//The ticks stored when the timer was paused
-		Uint32 mPausedTicks;
-
-		//The timer status
-		bool mPaused;
-		bool mStarted;
-};
-
 //Starts up SDL and creates window
 bool init();
-
 
 //Frees media and shuts down SDL
 void close();
@@ -59,6 +27,8 @@ SDL_Window* gWindow = NULL;
 
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
+
+Client *myClient;
 
 //Scene textures
 LTexture gDotTexture;
@@ -99,7 +69,6 @@ bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColo
 	return mTexture != NULL;
 }
 #endif
-
 
 bool init()
 {
@@ -152,6 +121,15 @@ bool init()
 		}
 	}
 
+	//Init Client
+	myClient = new Client("192.168.0.67",1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
+	if (!myClient->Connect()) //If client fails to connect...
+	{
+		std::cout << "Failed to connect to server..." << std::endl;
+		system("pause");
+		return -1;
+	}
+
 	return success;
 }
 
@@ -190,6 +168,8 @@ int main( int argc, char* args[] )
 			Dot dot;
 			dot.Init(gRenderer);
 
+			std::string userinput;
+
 			//While application is running
 			while( !quit )
 			{
@@ -204,6 +184,8 @@ int main( int argc, char* args[] )
 
 					//Handle input for the dot
 					dot.handleEvent( e );
+
+					myClient->SendString(dot.GetPosAsString()); //Send string to server
 				}
 
 				//Move the dot
