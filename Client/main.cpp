@@ -167,6 +167,7 @@ int main( int argc, char* args[] )
 
 			//The dot that will be moving around on the screen
 			std::vector<Dot> enemys;
+			myClient->gRenderer = gRenderer;
 			Dot dot;
 			dot.Init(gRenderer);
 
@@ -191,12 +192,8 @@ int main( int argc, char* args[] )
 
 				}
 
-				for (int i = 0;i < myClient->enemies.size(); i++) {
-					myClient->enemies[i].move(SCREEN_HEIGHT, SCREEN_WIDTH);
-				}
-
 				//Move the dot
-				dot.move(SCREEN_HEIGHT, SCREEN_WIDTH);
+				//dot.move(SCREEN_HEIGHT, SCREEN_WIDTH);
 				
 				myClient->SendString(dot.GetPosAsString()); //Send string to server
 
@@ -209,7 +206,7 @@ int main( int argc, char* args[] )
 					myClient->enemies[i].render(gRenderer);
 				}
 
-				dot.render(gRenderer);
+				//dot.render(gRenderer);
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );

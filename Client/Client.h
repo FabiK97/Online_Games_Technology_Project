@@ -18,6 +18,7 @@ public: //Public functions
 	float getY() { return yCoord; };
 	float getX() { return xCoord; };
 	std::vector<Dot> enemies;
+	SDL_Renderer* gRenderer;
 
 
 private: //Private functions

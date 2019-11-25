@@ -91,12 +91,13 @@ bool Client::processMessage(std::string message)
 	for (int i = 0;i < enemies.size(); i++) {
 		if (enemies[i].getID() == id) {
 			enemies[i].SetPosition(xCoord, yCoord);
-			found == true;
+			found = true;
 		}
 	}
 	if (!found) {
 		dot.setID(id);
 		dot.SetPosition(xCoord, yCoord);
+		dot.Init(gRenderer);
 		enemies.push_back(dot);
 	}
 
