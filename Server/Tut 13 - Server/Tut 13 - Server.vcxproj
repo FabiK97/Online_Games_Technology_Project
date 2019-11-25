@@ -95,6 +95,7 @@
     <ClInclude Include="PacketManager.h" />
     <ClInclude Include="PacketStructs.h" />
     <ClInclude Include="PacketType.h" />
+    <ClInclude Include="ProcessPacket.h" />
     <ClInclude Include="Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

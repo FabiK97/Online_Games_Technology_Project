@@ -13,6 +13,7 @@ bool Client::ProcessPacketType(PacketType packetType)
 		if (!GetString(Message)) //Get the chat message and store it in variable: Message
 			return false; //If we do not properly get the chat message, return false
 		std::cout << Message << std::endl; //Display the message to the user
+		
 		break;
 	}
 	case PacketType::FileTransferByteBuffer:

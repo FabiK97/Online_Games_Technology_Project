@@ -1,6 +1,7 @@
 #include "Server.h"
 #include <iostream>
 #include "PacketStructs.h"
+#include "ProcessPacket.h"
 #pragma comment(lib,"ws2_32.lib") //Required for WinSock
 
 bool Server::ProcessPacket(std::shared_ptr<Connection> connection, PacketType packetType)
@@ -14,6 +15,8 @@ bool Server::ProcessPacket(std::shared_ptr<Connection> connection, PacketType pa
 			return false; //If we do not properly get the chat message, return false
 						  //Next we need to send the message out to each user
 
+		message = addId(connection->m_ID, message);
+
 		PS::ChatMessage cm(message);
 		std::shared_ptr<Packet> msgPacket = std::make_shared<Packet>(cm.toPacket()); //use shared_ptr instead of sending with SendString so we don't have to reallocate packet for each connection
 		{
@@ -25,7 +28,7 @@ bool Server::ProcessPacket(std::shared_ptr<Connection> connection, PacketType pa
 				conn->m_pm.Append(msgPacket);
 			}
 		}
-		std::cout << "Processed chat message packet from user ID: " << connection->m_ID << std::endl;
+		std::cout << "Processed chat message packet from user: " << message << std::endl;
 		break;
 	}
 	case PacketType::FileTransferRequestFile:
@@ -59,4 +62,9 @@ bool Server::ProcessPacket(std::shared_ptr<Connection> connection, PacketType pa
 	}
 	}
 	return true;
+}
+
+std::string Server::addId(int id, std::string message) {
+	std::string prefix = "ID:" + std::to_string(id) + ",";
+	return prefix + message;
 }
