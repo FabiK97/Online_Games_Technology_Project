@@ -41,9 +41,14 @@ public:
 	int GetCenterX();
 	int GetCenterY();
 
+	int getID() {
+		return id;
+	};
+
 	void SetPosition(int x, int y);
 
 private:
+	int id;
 	bool isLocalplayer;
 	bool isChaser;
 

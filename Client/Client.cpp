@@ -50,16 +50,39 @@ bool Client::ProcessPacketType(PacketType packetType)
 
 bool Client::processMessage(std::string message)
 {
+	Dot dot;
 	std::string compareString = "ID:0,";
 	if (message.find(compareString) != message.npos) {
 		std::cout << "Found Player1 input \n";
-		processMessage(message.substr(message.find_first_of(",") + 1));
+		bool found = false;
+		for (int i = 0;i < enemies.size(); i++) {
+			if (enemies[i].getID() == 0) {
+				dot = enemies[i];
+				found == true;
+			}
+		}
+		if (!found) {
+			dot = new Dot();
+		}
+
+		message = message.substr(message.find_first_of(",") + 1);
 	}
 
 	compareString = "ID:1,";
 	if (message.find(compareString) != message.npos) {
 		std::cout << "Found Player 2 input \n";
-		processMessage(message.substr(message.find_first_of(",") + 1));
+		bool found = false;
+		for (int i = 0;i < enemies.size(); i++) {
+			if (enemies[i].getID() == 0) {
+				dot = enemies[i];
+				found == true;
+			}
+		}
+		if (!found) {
+			dot = new Dot();
+		}
+
+		message = message.substr(message.find_first_of(",") + 1);
 	}
 
 	compareString = "X:";
@@ -69,7 +92,8 @@ bool Client::processMessage(std::string message)
 		std::string x = message.substr(message.find(compareString) +2 , lenght);
 		std::stringstream ss(x);
 		ss >> xCoord;
-		processMessage(message.substr(message.find_first_of(",") + 1));
+
+		message = message.substr(message.find_first_of(",") + 1);
 	}
 	compareString = "Y:";
 	if (message.find(compareString) != message.npos) {
@@ -78,6 +102,8 @@ bool Client::processMessage(std::string message)
 		std::stringstream ss(y);
 		ss >> yCoord;
 	}
+	dot.SetPosition(xCoord, yCoord);
+
 	return false;
 }
 

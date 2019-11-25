@@ -4,6 +4,7 @@
 #include "FileTransferData.h" //For FileTransferData class
 #include "PacketManager.h" //For PacketManager class
 #include <sstream>
+#include "Dot.h";
 
 class Client
 {
@@ -16,6 +17,8 @@ public: //Public functions
 	~Client();
 	float getY() { return yCoord; };
 	float getX() { return xCoord; };
+	std::vector<Dot> enemies;
+
 
 private: //Private functions
 	bool CloseConnection();

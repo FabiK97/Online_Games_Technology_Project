@@ -122,8 +122,8 @@ bool init()
 	}
 
 	//Init Client
-	//myClient = new Client("192.168.0.67",1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
-	myClient = new Client("127.0.0.1", 1111);
+	myClient = new Client("192.168.0.67",1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
+	//myClient = new Client("127.0.0.1", 1111);
 	if (!myClient->Connect()) //If client fails to connect...
 	{
 		std::cout << "Failed to connect to server..." << std::endl;
@@ -186,9 +186,13 @@ int main( int argc, char* args[] )
 
 					//Handle input for the dot
 					dot.handleEvent( e );
-					dot.SetPosition(myClient->getX(), myClient->getY());
+					//dot.SetPosition(myClient->getX(), myClient->getY());
 
 
+				}
+
+				for (int i = 0;i < myClient->enemies.size(); i++) {
+					myClient->enemies[i].move(SCREEN_HEIGHT, SCREEN_WIDTH);
 				}
 
 				//Move the dot
@@ -201,6 +205,10 @@ int main( int argc, char* args[] )
 				SDL_RenderClear( gRenderer );
 
 				//Render objects
+				for (int i = 0;i < myClient->enemies.size(); i++) {
+					myClient->enemies[i].render();
+				}
+
 				dot.render(gRenderer);
 
 				//Update screen
