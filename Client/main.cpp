@@ -184,6 +184,7 @@ int main( int argc, char* args[] )
 
 					//Handle input for the dot
 					dot.handleEvent( e );
+					dot.SetPosition(myClient->getX(), myClient->getY());
 
 					myClient->SendString(dot.GetPosAsString()); //Send string to server
 				}

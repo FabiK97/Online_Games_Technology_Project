@@ -67,15 +67,14 @@ bool Client::processMessage(std::string message)
 		std::cout << "extracting X coordinate\n";
 		int lenght = message.find_first_of(",") - message.find(compareString);
 		std::string x = message.substr(message.find(compareString) +2 , lenght);
-		std::stringstream ss(x);
-		ss >> xCoord;
 		processMessage(message.substr(message.find_first_of(",") + 1));
 	}
 	compareString = "Y:";
 	if (message.find(compareString) != message.npos) {
 		std::cout << "extracting Y coordinate\n";
 		std::string y = message.substr(message.find(compareString)+2);
-		std::stringstream ss(y);
+		std::stringstream ss;
+		ss << y;
 		ss >> yCoord;
 	}
 	return false;
