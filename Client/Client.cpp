@@ -51,19 +51,12 @@ bool Client::ProcessPacketType(PacketType packetType)
 bool Client::processMessage(std::string message)
 {
 	Dot dot;
+	int id;
+	bool found = false;
 	std::string compareString = "ID:0,";
 	if (message.find(compareString) != message.npos) {
 		std::cout << "Found Player1 input \n";
-		bool found = false;
-		for (int i = 0;i < enemies.size(); i++) {
-			if (enemies[i].getID() == 0) {
-				dot = enemies[i];
-				found == true;
-			}
-		}
-		if (!found) {
-			dot = new Dot();
-		}
+		id = 0;
 
 		message = message.substr(message.find_first_of(",") + 1);
 	}
@@ -72,15 +65,7 @@ bool Client::processMessage(std::string message)
 	if (message.find(compareString) != message.npos) {
 		std::cout << "Found Player 2 input \n";
 		bool found = false;
-		for (int i = 0;i < enemies.size(); i++) {
-			if (enemies[i].getID() == 0) {
-				dot = enemies[i];
-				found == true;
-			}
-		}
-		if (!found) {
-			dot = new Dot();
-		}
+		id = 1;
 
 		message = message.substr(message.find_first_of(",") + 1);
 	}
@@ -102,7 +87,18 @@ bool Client::processMessage(std::string message)
 		std::stringstream ss(y);
 		ss >> yCoord;
 	}
-	dot.SetPosition(xCoord, yCoord);
+
+	for (int i = 0;i < enemies.size(); i++) {
+		if (enemies[i].getID() == id) {
+			enemies[i].SetPosition(xCoord, yCoord);
+			found == true;
+		}
+	}
+	if (!found) {
+		dot.setID(id);
+		dot.SetPosition(xCoord, yCoord);
+		enemies.push_back(dot);
+	}
 
 	return false;
 }

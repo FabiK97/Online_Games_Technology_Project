@@ -45,6 +45,8 @@ public:
 		return id;
 	};
 
+	void setID(int id) { this->id = id; }
+
 	void SetPosition(int x, int y);
 
 private:

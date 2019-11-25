@@ -206,7 +206,7 @@ int main( int argc, char* args[] )
 
 				//Render objects
 				for (int i = 0;i < myClient->enemies.size(); i++) {
-					myClient->enemies[i].render();
+					myClient->enemies[i].render(gRenderer);
 				}
 
 				dot.render(gRenderer);
