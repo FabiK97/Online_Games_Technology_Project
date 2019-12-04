@@ -26,27 +26,33 @@ bool Client::ProcessPacketType(PacketType packetType)
 			return false; //If we do not properly get the chat message, return false
 		dot = processMessage(dotm);
 		
-		if (playerDot == nullptr) {
-			playerDot = &dot;
-		}
+		if (!playerDot->isInit) {
+			playerDot->setID(dot.getID());
+			playerDot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
+			playerDot->isChaser = dot.isChaser;
 
-		if (enemy1Dot == nullptr) {
-			enemy1Dot == &dot;
+			playerDot->isInit = true;
+		} else if (!enemy1Dot->isInit) {
+			enemy1Dot->setID(dot.getID());
+			enemy1Dot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
+			enemy1Dot->isChaser = dot.isChaser;
+			enemy1Dot->isInit = true;
 		} else {
 			if (enemy1Dot->getID() == dot.getID()) {
-				enemy1Dot = &dot;
+				enemy1Dot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
+			} else if (!enemy2Dot->isInit) {
+				enemy2Dot->setID(dot.getID());
+				enemy2Dot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
+				enemy2Dot->isChaser = dot.isChaser;
+				enemy2Dot->isInit = true;
+			} else {
+				if (enemy2Dot->getID() == dot.getID()) {
+					enemy2Dot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
+				}
 			}
 		}
 
-		if (enemy2Dot == nullptr) {
-			enemy2Dot == &dot;
-		}
-		else {
-			if (enemy2Dot->getID() == dot.getID()) {
-				enemy2Dot = &dot;
-			}
-		}
-
+		break;
 	}
 	case PacketType::AuthoritiveMessage: 
 	{
@@ -86,15 +92,14 @@ bool Client::ProcessPacketType(PacketType packetType)
 
 Dot Client::processMessage(std::string message)
 {
-	int xCoord;
-	int yCoord;
+	int xCoord = 0;
+	int yCoord = 0;
 	int id;
 	bool chaser;
-	string msg = "x:1,y:2,chaser:1";
 
 	vector<string> results;
 
-	stringstream  ss(msg);
+	stringstream  ss(message);
 	string str;
 	while (getline(ss, str, ',')) {
 		results.push_back(str);
@@ -133,6 +138,7 @@ Dot Client::processMessage(std::string message)
 	Dot dot(chaser);
 	dot.setID(id);
 	dot.SetPosition(xCoord, yCoord);
+	
 
 	return dot;
 }

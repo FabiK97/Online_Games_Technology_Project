@@ -29,9 +29,10 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 Client *myClient;
-Dot* player;
-Dot* enemy1;
-Dot* enemy2;
+Dot player;
+Dot enemy1;
+Dot enemy2;
+//Dot dot;
 
 //Scene textures
 LTexture gDotTexture;
@@ -125,8 +126,8 @@ bool init()
 	}
 
 	//Init Client
-	//myClient = new Client("192.168.0.67",1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
-	myClient = new Client("127.0.0.1", 1111);
+	myClient = new Client("149.153.128.85",1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
+	//myClient = new Client("127.0.0.1", 1111);
 	if (!myClient->Connect()) //If client fails to connect...
 	{
 		std::cout << "Failed to connect to server..." << std::endl;
@@ -169,18 +170,18 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 
 			//The dot that will be moving around on the screen
-			std::vector<Dot> enemies;
-			for (int i = 0; i < 3; i++) {
-				enemies.push_back(new Dot());
-				enemies[i].Init(gRenderer);
-			}
-			myClient->enemies = &enemies;
-			myClient->playerDot = player;
-			myClient->enemy1Dot = enemy1;
-			myClient->enemy2Dot = enemy2;
 
-			Dot dot;
-			dot.Init(gRenderer);
+			player.Init(gRenderer);
+
+			myClient->playerDot = &player;
+			myClient->enemy1Dot = &enemy1;
+			myClient->enemy2Dot = &enemy2;
+			enemy1.Init(gRenderer);
+			enemy2.Init(gRenderer);
+
+
+
+			//dot.Init(gRenderer);
 
 			std::string userinput;
 
@@ -197,23 +198,25 @@ int main( int argc, char* args[] )
 					}
 
 					//Handle input for the dot
-					if(player != nullptr) player->handleEvent( e );
+					player.handleEvent( e );
 					//dot.SetPosition(myClient->getX(), myClient->getY());
 
 				}
 
 				//Move the dot
-				if (player != nullptr) player->move(SCREEN_HEIGHT, SCREEN_WIDTH);
+				//dot.move(SCREEN_HEIGHT, SCREEN_WIDTH);
+				player.move(SCREEN_HEIGHT, SCREEN_WIDTH);
 				
-				myClient->SendDotString(dot);				//Send dot instead of position alone
+				if (player.isInit) myClient->SendDotString(player);				//Send dot instead of position alone
 
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
 
-				if (player != nullptr) player->render(gRenderer);
-				if (enemy1 != nullptr) enemy1->render(gRenderer);
-				if (enemy2 != nullptr) enemy2->render(gRenderer);
+				//dot.render(gRenderer);
+				player.render(gRenderer);
+				if (enemy1.isInit) enemy1.render(gRenderer);
+				if (enemy2.isInit) enemy2.render(gRenderer);
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
