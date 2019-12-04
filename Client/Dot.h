@@ -33,6 +33,7 @@ public:
 	void render(SDL_Renderer *gRenderer);
 
 	std::string GetPosAsString();
+	std::string GetDotAsString();
 
 	bool Checkcollision(int centerX, int centerY);
 
@@ -44,7 +45,7 @@ public:
 	int getID() {
 		return id;
 	};
-
+	std::int32_t getColorInt32();
 	void setID(int id) { this->id = id; }
 
 	void SetPosition(int x, int y);
@@ -54,10 +55,12 @@ private:
 	bool isLocalplayer;
 	bool isChaser;
 
+
 	//The X and Y offsets of the dot
 	int mPosX, mPosY;
 
 	int width, height;
+	SDL_Colour color;
 
 	int mCenterX, mCenterY;
 	//The velocity of the dot

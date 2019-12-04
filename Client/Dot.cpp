@@ -14,19 +14,34 @@ Dot::Dot(bool chaser)
 	if (isChaser)
 	{
 		gDotTexture.setColor(244, 66, 66);
+		color.a = 255;
+		color.r = 244;
+		color.g = 66;
+		color.b = 66;
 	}
 	else
 	{
 		gDotTexture.setColor(66, 69, 244);
+		color.a = 255;
+		color.r = 66;
+		color.g = 69;
+		color.b = 244;
 	}
 
 	width = 10;
 	height = 10;
+
+
 }
 
 Dot::~Dot()
 {
 	gDotTexture.free();
+}
+
+std::int32_t Dot::getColorInt32()
+{
+	return (std::int32_t)((color.r << 16) + (color.g << 8) + (color.b << 0));
 }
 
 void Dot::SetPosition(int x, int y)
@@ -149,6 +164,16 @@ void Dot::render(SDL_Renderer *gRenderer)
 std::string Dot::GetPosAsString()
 {
 	return std::string("X:"+ std::to_string(mPosX) + "," + "Y:" + std::to_string(mPosY));
+}
+
+std::string Dot::GetDotAsString()
+{
+	if (isChaser) {
+		return GetPosAsString() + "Chaser:0";
+	}
+	else {
+		return GetPosAsString() + "Chaser:1";
+	}
 }
 
 int Dot::GetCenterX()

@@ -24,4 +24,17 @@ namespace PS
 		p->Append(m_databuffer, m_size);
 		return p;
 	}
+	DotMessage::DotMessage(Dot& d) :dot(d)
+	{
+	}
+
+	std::shared_ptr<Packet> DotMessage::toPacket()
+	{
+		std::shared_ptr<Packet> p = std::make_shared<Packet>();
+		std::string dotString = dot.getDotAsString();
+		p->Append(PacketType::DotMessage);
+		p->Append(dotString.size());
+		p->Append(dot.GetDotAsString());
+		return p;
+	}
 }
