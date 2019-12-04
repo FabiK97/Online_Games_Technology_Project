@@ -55,6 +55,9 @@ bool Server::ListenForNewConnection()
 		std::shared_ptr<Connection> newConnection(std::make_shared<Connection>(newConnectionSocket));
 		m_connections.push_back(newConnection); //push new connection into vector of connections
 		newConnection->m_ID = m_IDCounter; //Set ID for this connection
+		if (m_IDCounter == 0) {
+			newConnection->setAuth();
+		}
 		m_IDCounter += 1; //Increment ID Counter...
 		std::cout << "Client Connected! ID:" << newConnection->m_ID << std::endl;
 		std::thread CHT(ClientHandlerThread, std::ref(*this), newConnection);

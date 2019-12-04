@@ -22,4 +22,31 @@ namespace PS //Packet Structures Namespace
 		char m_databuffer[FileTransferData::m_bufferSize]; //buffer of data to be sent
 		int m_size; //size of data buffer
 	};
+
+	class EndGameMessage
+	{
+	public:
+
+	private:
+
+	};
+
+	class DotMessage
+	{
+	public:
+		DotMessage(Dot& d);
+		std::shared_ptr<Packet> toPacket();
+	private:
+		Dot dot;
+	};
+
+	class AuthoritiveMessage
+	{
+	public:
+		AuthoritiveMessage(const std::string& str);
+		std::shared_ptr<Packet> toPacket();
+	private:
+		std::string m_message;
+	};
+
 }

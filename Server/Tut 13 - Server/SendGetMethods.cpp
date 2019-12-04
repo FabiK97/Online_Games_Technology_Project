@@ -51,6 +51,12 @@ void Server::SendString(std::shared_ptr<Connection> connection, const std::strin
 	connection->m_pm.Append(message.toPacket());
 }
 
+void Server::SendAuth(std::shared_ptr<Connection> connection, const std::string& str) {
+
+	PS:: message();
+	connection->m_pm.Append(message.toPacket());
+}
+
 bool Server::GetString(std::shared_ptr<Connection> connection, std::string & str)
 {
 	std::int32_t bufferlength; //Holds length of the message

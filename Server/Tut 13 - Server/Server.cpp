@@ -6,6 +6,9 @@
 void Server::ClientHandlerThread(Server & server, std::shared_ptr<Connection> connection) //ID = the index in the SOCKET connections array
 {
 	PacketType packettype;
+	if (connection->isAuth()) {
+		server.SendAuth(connection, "Auth:1");
+	}
 	while (true)
 	{
 		if (server.m_terminateThreads == true)

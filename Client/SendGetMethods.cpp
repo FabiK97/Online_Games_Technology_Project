@@ -50,6 +50,12 @@ void Client::SendString(const std::string & str)
 	m_pm.Append(cm.toPacket());
 }
 
+void Client::SendDotString(Dot& dot) {
+	PS::DotMessage dm(dot);
+	m_pm.Append(dm.toPacket());
+}
+
+
 bool Client::GetString(std::string & str)
 {
 	int32_t bufferlength; //Holds length of the message

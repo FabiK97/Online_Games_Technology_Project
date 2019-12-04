@@ -196,6 +196,7 @@ int main( int argc, char* args[] )
 				dot.move(SCREEN_HEIGHT, SCREEN_WIDTH);
 				
 				myClient->SendString(dot.GetPosAsString()); //Send string to server
+				myClient->SendDotString(dot);				//Send dot instead of position alone
 
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );

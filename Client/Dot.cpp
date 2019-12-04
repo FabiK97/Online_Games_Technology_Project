@@ -163,16 +163,16 @@ void Dot::render(SDL_Renderer *gRenderer)
 
 std::string Dot::GetPosAsString()
 {
-	return std::string("X:"+ std::to_string(mPosX) + "," + "Y:" + std::to_string(mPosY));
+	return std::string("x:"+ std::to_string(mPosX) + "," + "y:" + std::to_string(mPosY));
 }
 
 std::string Dot::GetDotAsString()
 {
 	if (isChaser) {
-		return GetPosAsString() + "Chaser:0";
+		return GetPosAsString() + "chaser:1";
 	}
 	else {
-		return GetPosAsString() + "Chaser:1";
+		return GetPosAsString() + "chaser:0";
 	}
 }
 

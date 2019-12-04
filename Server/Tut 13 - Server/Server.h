@@ -18,6 +18,13 @@ public:
 	FileTransferData m_file; //Object that contains information about our file that is being sent to the client from this server
 	PacketManager m_pm; //Packet Manager for outgoing data for this connection
 	int m_ID = 0;
+	bool auth = false;
+	void setAuth() {
+		auth = true;
+	};
+	bool isAuth() {
+		return auth;
+	};
 };
 
 class Server
@@ -32,6 +39,7 @@ private: //Private functions
 	bool Getint32_t(std::shared_ptr<Connection> connection, std::int32_t & int32_t);
 	bool GetPacketType(std::shared_ptr<Connection> connection, PacketType & packetType);
 	void SendString(std::shared_ptr<Connection> connection, const std::string & str);
+	void SendAuth(std::shared_ptr<Connection> connection, const std::string& str);
 	bool GetString(std::shared_ptr<Connection> connection, std::string & str);
 	bool ProcessPacket(std::shared_ptr<Connection> connection, PacketType packetType);
 	std::string addId(int id, std::string message);
