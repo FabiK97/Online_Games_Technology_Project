@@ -50,10 +50,13 @@ public:
 
 	void SetPosition(int x, int y);
 
+	bool isInit;
+	bool isChaser;
+
+
 private:
 	int id;
 	bool isLocalplayer;
-	bool isChaser;
 
 
 	//The X and Y offsets of the dot
