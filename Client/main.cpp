@@ -193,7 +193,7 @@ int main( int argc, char* args[] )
 				}
 
 				//Move the dot
-				//dot.move(SCREEN_HEIGHT, SCREEN_WIDTH);
+				dot.move(SCREEN_HEIGHT, SCREEN_WIDTH);
 				
 				myClient->SendString(dot.GetPosAsString()); //Send string to server
 

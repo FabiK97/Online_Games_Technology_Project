@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <vector>
 #include <iostream>
+#include "Dot.h"
 class Packet
 {
 public:

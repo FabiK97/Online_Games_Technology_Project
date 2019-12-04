@@ -20,6 +20,7 @@ void Packet::Append(const char * dataBuffer, const int size)
 	m_buffer.insert(m_buffer.end(), dataBuffer, dataBuffer + size);
 }
 
+
 void Packet::Append(const std::string & str)
 {
 	Append(str.c_str(), str.size());
