@@ -95,7 +95,7 @@ Dot Client::processMessage(std::string message)
 	int xCoord = 0;
 	int yCoord = 0;
 	int id;
-	bool chaser;
+	bool chaser = false;
 
 	vector<string> results;
 

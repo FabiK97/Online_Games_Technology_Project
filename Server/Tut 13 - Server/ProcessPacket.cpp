@@ -36,7 +36,7 @@ bool Server::ProcessPacket(std::shared_ptr<Connection> connection, PacketType pa
 			return false; //If we do not properly get the chat message, return false
 						  //Next we need to send the message out to each user
 
-		PS::ChatMessage cm(message);
+		PS::DotMessage cm(message);
 		std::shared_ptr<Packet> msgPacket = std::make_shared<Packet>(cm.toPacket()); //use shared_ptr instead of sending with SendString so we don't have to reallocate packet for each connection
 		{
 			std::shared_lock<std::shared_mutex> lock(m_mutex_connectionMgr);

@@ -35,10 +35,12 @@ namespace PS //Packet Structures Namespace
 	class DotMessage
 	{
 	public:
-		DotMessage(Dot& d);
+		DotMessage(Dot d);
+		DotMessage(std::string& str);
 		std::shared_ptr<Packet> toPacket();
 	private:
 		Dot dot;
+		std::string dotString;
 	};
 
 	class AuthoritiveMessage

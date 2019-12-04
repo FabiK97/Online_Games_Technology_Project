@@ -169,10 +169,10 @@ std::string Dot::GetPosAsString()
 std::string Dot::GetDotAsString()
 {
 	if (isChaser) {
-		return "ID:" + std::to_string(id) + "," + GetPosAsString() + "chaser:1";
+		return "id:" + std::to_string(id) + "," + GetPosAsString() + "," + "chaser:1";
 	}
 	else {
-		return "ID:" + std::to_string(id) + "," + GetPosAsString() + "chaser:0";
+		return "id:" + std::to_string(id) + "," + GetPosAsString() + "," + "chaser:0";
 	}
 }
 

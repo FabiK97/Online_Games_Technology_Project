@@ -25,14 +25,20 @@ namespace PS
 		return p;
 	}
 
-	DotMessage::DotMessage(Dot& d) :dot(d)
+	DotMessage::DotMessage(Dot d) :dot(d)
+	{
+	}
+
+	DotMessage::DotMessage(std::string& str) :dotString(str)
 	{
 	}
 
 	std::shared_ptr<Packet> DotMessage::toPacket()
 	{
 		std::shared_ptr<Packet> p = std::make_shared<Packet>();
-		std::string dotString = dot.GetDotAsString();
+		if (dotString.size() <= 0) {
+			dotString = dot.GetDotAsString();
+		}
 		p->Append(PacketType::DotMessage);
 		p->Append(dotString.size());
 		p->Append(dotString);
