@@ -59,3 +59,8 @@ Client::~Client()
 	m_pst.join();
 	m_ct.join();
 }
+
+Dot Client::getDot(int i)
+{
+	return &enemies[i];
+}

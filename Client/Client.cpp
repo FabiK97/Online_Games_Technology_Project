@@ -3,6 +3,9 @@
 #pragma comment(lib,"ws2_32.lib") //Required for WinSock
 #include <iostream> //for std::cout
 
+
+using namespace std;
+
 bool Client::ProcessPacketType(PacketType packetType)
 {
 	switch (packetType)
@@ -13,8 +16,37 @@ bool Client::ProcessPacketType(PacketType packetType)
 		if (!GetString(Message)) //Get the chat message and store it in variable: Message
 			return false; //If we do not properly get the chat message, return false
 		std::cout << Message << std::endl; //Display the message to the user
-		processMessage(Message);		
 		break;
+	}
+	case PacketType::DotMessage:
+	{
+		Dot dot;
+		std::string dotm; //string to store our message we received
+		if (!GetString(dotm)) //Get the chat message and store it in variable: Message
+			return false; //If we do not properly get the chat message, return false
+		dot = processMessage(dotm);
+		
+		if (playerDot == nullptr) {
+			playerDot = &dot;
+		}
+
+		if (enemy1Dot == nullptr) {
+			enemy1Dot == &dot;
+		} else {
+			if (enemy1Dot->getID() == dot.getID()) {
+				enemy1Dot = &dot;
+			}
+		}
+
+		if (enemy2Dot == nullptr) {
+			enemy2Dot == &dot;
+		}
+		else {
+			if (enemy2Dot->getID() == dot.getID()) {
+				enemy2Dot = &dot;
+			}
+		}
+
 	}
 	case PacketType::FileTransferByteBuffer:
 	{
@@ -48,60 +80,57 @@ bool Client::ProcessPacketType(PacketType packetType)
 	return true;
 }
 
-bool Client::processMessage(std::string message)
+Dot Client::processMessage(std::string message)
 {
-	Dot dot;
+	int xCoord;
+	int yCoord;
 	int id;
-	bool found = false;
-	std::string compareString = "ID:0,";
-	if (message.find(compareString) != message.npos) {
-		std::cout << "Found Player1 input \n";
-		id = 0;
+	bool chaser;
+	string msg = "x:1,y:2,chaser:1";
 
-		message = message.substr(message.find_first_of(",") + 1);
+	vector<string> results;
+
+	stringstream  ss(msg);
+	string str;
+	while (getline(ss, str, ',')) {
+		results.push_back(str);
 	}
 
-	compareString = "ID:1,";
-	if (message.find(compareString) != message.npos) {
-		std::cout << "Found Player 2 input \n";
-		bool found = false;
-		id = 1;
+	for (auto word : results) {
+		stringstream  pair_ss(word);
+		string pair_str;
+		getline(pair_ss, pair_str, ':');
+		string key = pair_str;
+		getline(pair_ss, pair_str, ':');
+		string value = pair_str;
 
-		message = message.substr(message.find_first_of(",") + 1);
-	}
-
-	compareString = "X:";
-	if (message.find(compareString) != message.npos) {
-		std::cout << "extracting X coordinate\n";
-		int lenght = message.find_first_of(",") - message.find(compareString);
-		std::string x = message.substr(message.find(compareString) +2 , lenght);
-		std::stringstream ss(x);
-		ss >> xCoord;
-
-		message = message.substr(message.find_first_of(",") + 1);
-	}
-	compareString = "Y:";
-	if (message.find(compareString) != message.npos) {
-		std::cout << "extracting Y coordinate\n";
-		std::string y = message.substr(message.find(compareString)+2);
-		std::stringstream ss(y);
-		ss >> yCoord;
-	}
-
-	for (int i = 0;i < enemies.size(); i++) {
-		if (enemies[i].getID() == id) {
-			enemies[i].SetPosition(xCoord, yCoord);
-			found = true;
+		if (key == "x") {
+			std::stringstream ss(value);
+			ss >> xCoord;
+		}
+		else if (key == "y") {
+			std::stringstream ss(value);
+			ss >> yCoord;
+		}
+		else if (key == "id") {
+			std::stringstream ss(value);
+			ss >> id;
+		}
+		else if (key == "chaser") {
+			int temp;
+			std::stringstream ss(value);
+			ss >> temp;
+			chaser = (temp == 1);
 		}
 	}
-	if (!found) {
-		dot.setID(id);
-		dot.SetPosition(xCoord, yCoord);
-		dot.Init(gRenderer);
-		enemies.push_back(dot);
-	}
 
-	return false;
+
+	//create new dot
+	Dot dot(chaser);
+	dot.setID(id);
+	dot.SetPosition(xCoord, yCoord);
+
+	return dot;
 }
 
 void Client::ClientThread(Client & client)
