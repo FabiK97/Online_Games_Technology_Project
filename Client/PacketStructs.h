@@ -35,7 +35,7 @@ namespace PS //Packet Structures Namespace
 	class DotMessage
 	{
 	public:
-		DotMessage(Dot& d);
+		DotMessage(Dot d);
 		std::shared_ptr<Packet> toPacket();
 	private:
 		Dot dot;

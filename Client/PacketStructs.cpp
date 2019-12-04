@@ -24,7 +24,7 @@ namespace PS
 		p->Append(m_databuffer, m_size);
 		return p;
 	}
-	DotMessage::DotMessage(Dot& d) :dot(d)
+	DotMessage::DotMessage(Dot d) :dot(d)
 	{
 	}
 
