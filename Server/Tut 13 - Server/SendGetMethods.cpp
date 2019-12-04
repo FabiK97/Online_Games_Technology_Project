@@ -51,11 +51,27 @@ void Server::SendString(std::shared_ptr<Connection> connection, const std::strin
 	connection->m_pm.Append(message.toPacket());
 }
 
-void Server::SendAuth(std::shared_ptr<Connection> connection, const std::string& str) {
+void Server::SendAuth(std::shared_ptr<Connection> connection) {
 
-	PS:: message();
+	PS::AuthoritiveMessage message(1);
 	connection->m_pm.Append(message.toPacket());
 }
+
+void Server::SendDot(std::shared_ptr<Connection> connection, Dot& dot)
+{
+
+}
+
+void Server::SendDotInit(std::shared_ptr<Connection> connection) {
+	Dot dot(connection->isAuth());
+	dot.setID(connection->m_ID);
+	dot.SetPosition(160 * (connection->m_ID +1), 240);
+	PS::DotMessage message(dot);
+	connection->m_pm.Append(message.toPacket());
+}
+
+
+
 
 bool Server::GetString(std::shared_ptr<Connection> connection, std::string & str)
 {

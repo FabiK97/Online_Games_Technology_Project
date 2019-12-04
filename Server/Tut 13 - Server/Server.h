@@ -5,6 +5,7 @@
 #include "PacketManager.h" //for PacketManager class
 #include <vector> //for std::vector
 #include <shared_mutex> //for shared_mutex
+#include "Dot.h"
 
 class Connection
 {
@@ -39,7 +40,9 @@ private: //Private functions
 	bool Getint32_t(std::shared_ptr<Connection> connection, std::int32_t & int32_t);
 	bool GetPacketType(std::shared_ptr<Connection> connection, PacketType & packetType);
 	void SendString(std::shared_ptr<Connection> connection, const std::string & str);
-	void SendAuth(std::shared_ptr<Connection> connection, const std::string& str);
+	void SendAuth(std::shared_ptr<Connection> connection);
+	void SendDot(std::shared_ptr<Connection> connection, Dot & dot);
+	void SendDotInit(std::shared_ptr<Connection> connection);
 	bool GetString(std::shared_ptr<Connection> connection, std::string & str);
 	bool ProcessPacket(std::shared_ptr<Connection> connection, PacketType packetType);
 	std::string addId(int id, std::string message);

@@ -4,6 +4,7 @@
 #include "FileTransferData.h" //for FileTransferData::buffersize
 #include <string> //for std::string
 #include <memory> //for std::shared_ptr
+#include "Dot.h"
 
 namespace PS //Packet Structures Namespace
 {
@@ -43,10 +44,10 @@ namespace PS //Packet Structures Namespace
 	class AuthoritiveMessage
 	{
 	public:
-		AuthoritiveMessage(const std::string& str);
+		AuthoritiveMessage(bool b);
 		std::shared_ptr<Packet> toPacket();
 	private:
-		std::string m_message;
+		bool auth;
 	};
 
 }

@@ -38,15 +38,13 @@ namespace PS
 		p->Append(dotString);
 		return p;
 	}
-	AuthoritiveMessage::AuthoritiveMessage(const std::string& str) :m_message(str)
+	AuthoritiveMessage::AuthoritiveMessage(bool b) :auth(b)
 	{
 	}
 	std::shared_ptr<Packet> AuthoritiveMessage::toPacket()
 	{
 		std::shared_ptr<Packet> p = std::make_shared<Packet>();
-		p->Append(PacketType::DotMessage);
-		p->Append(m_message.size());
-		p->Append(m_message);
+		p->Append(PacketType::AuthoritiveMessage);
 		return p;
 	}
 }
