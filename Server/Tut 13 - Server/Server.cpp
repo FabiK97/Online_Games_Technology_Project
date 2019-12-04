@@ -7,8 +7,9 @@ void Server::ClientHandlerThread(Server & server, std::shared_ptr<Connection> co
 {
 	PacketType packettype;
 	if (connection->isAuth()) {
-		server.SendAuth(connection);
+		//server.SendAuth(connection);
 		server.SendDotInit(connection);
+		//server.SendString(connection, "This is a string");
 	}
 	else {
 		server.SendDotInit(connection);
