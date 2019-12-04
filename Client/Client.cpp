@@ -48,6 +48,10 @@ bool Client::ProcessPacketType(PacketType packetType)
 		}
 
 	}
+	case PacketType::AuthoritiveMessage: 
+	{
+		isAuthoritive = true;
+	}
 	case PacketType::FileTransferByteBuffer:
 	{
 		std::int32_t buffersize; //buffer to hold size of buffer to write to file

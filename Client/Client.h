@@ -23,6 +23,7 @@ public: //Public functions
 	Dot* playerDot;
 	Dot* enemy1Dot;
 	Dot* enemy2Dot;
+	bool isAuthoritive;
 	SDL_Renderer* gRenderer;
 
 
