@@ -171,11 +171,11 @@ int main( int argc, char* args[] )
 
 			//The dot that will be moving around on the screen
 
-			player.Init(gRenderer);
 
 			myClient->playerDot = &player;
 			myClient->enemy1Dot = &enemy1;
 			myClient->enemy2Dot = &enemy2;
+			player.Init(gRenderer);
 			enemy1.Init(gRenderer);
 			enemy2.Init(gRenderer);
 
@@ -207,7 +207,7 @@ int main( int argc, char* args[] )
 				//dot.move(SCREEN_HEIGHT, SCREEN_WIDTH);
 				player.move(SCREEN_HEIGHT, SCREEN_WIDTH);
 				
-				if (player.isInit) myClient->SendDotString(player);				//Send dot instead of position alone
+				//			//Send dot instead of position alone
 
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -217,7 +217,8 @@ int main( int argc, char* args[] )
 				player.render(gRenderer);
 				if (enemy1.isInit) enemy1.render(gRenderer);
 				if (enemy2.isInit) enemy2.render(gRenderer);
-
+				
+				myClient->SendDotString(player);
 				//Update screen
 				SDL_RenderPresent( gRenderer );
 			

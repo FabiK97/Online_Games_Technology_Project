@@ -58,7 +58,7 @@ void Dot::Init(SDL_Renderer *gRenderer)
 {
 	if (isChaser)
 	{
-		if (!gDotTexture.loadFromFile("ASSETS/dot.bmp", gRenderer))
+		if (!gDotTexture.loadFromFile("ASSETS/chaserdot.bmp", gRenderer))
 		{
 			printf("Failed to load dot texture!\n");
 		}

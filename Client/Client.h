@@ -13,7 +13,7 @@ public: //Public functions
 	bool Connect();
 	void Disconnect();
 	void SendString(const std::string & str);
-	void SendDotString(Dot& dot);
+	void SendDotString(Dot dot);
 	bool RequestFile(const std::string & fileName);
 	~Client();
 	float getY() { return yCoord; };

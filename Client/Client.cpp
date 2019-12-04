@@ -27,11 +27,15 @@ bool Client::ProcessPacketType(PacketType packetType)
 		dot = processMessage(dotm);
 		
 		if (!playerDot->isInit) {
-			playerDot->setID(dot.getID());
+			/*playerDot->setID(dot.getID());
 			playerDot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
 			playerDot->isChaser = dot.isChaser;
 
-			playerDot->isInit = true;
+			playerDot->isInit = true;*/
+			playerDot->setID(dot.getID());
+			playerDot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
+			playerDot->isChaser = dot.isChaser;
+			//playerDot->isInit = true;
 		} else if (!enemy1Dot->isInit) {
 			enemy1Dot->setID(dot.getID());
 			enemy1Dot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
