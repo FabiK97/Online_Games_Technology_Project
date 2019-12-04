@@ -18,14 +18,18 @@ public: //Public functions
 	~Client();
 	float getY() { return yCoord; };
 	float getX() { return xCoord; };
-	std::vector<Dot> enemies;
+	Dot getDot(int i);
+	std::vector<Dot> *enemies;
+	Dot* playerDot;
+	Dot* enemy1Dot;
+	Dot* enemy2Dot;
 	SDL_Renderer* gRenderer;
 
 
 private: //Private functions
 	bool CloseConnection();
 	bool ProcessPacketType(const PacketType packetType);
-	bool processMessage(std::string message);
+	Dot processMessage(std::string message);
 	static void ClientThread(Client & client); //Client thread which reads messages from server
 	static void PacketSenderThread(Client & client); //Packet sender thread which sends out packets existing in packet manager
 	//Sending Funcs
