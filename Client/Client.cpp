@@ -26,9 +26,7 @@ bool Client::ProcessPacketType(PacketType packetType)
 			return false; //If we do not properly get the chat message, return false
 		dot = processMessage(dotm);
 
-		if (dot.GetCenterX() == NULL) {
-			std::cout << "x is null \n";
-		} else if (!playerDot->isInit) {
+		if (!playerDot->isInit) {
 			/*playerDot->setID(dot.getID());
 			playerDot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
 			playerDot->isChaser = dot.isChaser;

@@ -11,22 +11,6 @@ Dot::Dot(bool chaser)
 	mVelX = 0;
 	mVelY = 0;
 
-	if (isChaser)
-	{
-		gDotTexture.setColor(244, 66, 66);
-		color.a = 255;
-		color.r = 244;
-		color.g = 66;
-		color.b = 66;
-	}
-	else
-	{
-		gDotTexture.setColor(66, 69, 244);
-		color.a = 255;
-		color.r = 66;
-		color.g = 69;
-		color.b = 244;
-	}
 
 	width = 10;
 	height = 10;
@@ -36,7 +20,8 @@ Dot::Dot(bool chaser)
 
 Dot::~Dot()
 {
-	gDotTexture.free();
+	gBlackDotTexture.free();
+	gRedDotTexture.free();
 }
 
 std::int32_t Dot::getColorInt32()

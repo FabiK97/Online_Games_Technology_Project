@@ -55,7 +55,7 @@ namespace PS
 		return p;
 	}
 
-	ChaserMessage::ChaserMessage(std::string idString)
+	ChaserMessage::ChaserMessage(std::string idString) : idString(idString)
 	{
 	}
 
@@ -66,4 +66,5 @@ namespace PS
 		p->Append(idString.size());
 		p->Append(idString);
 		return p;
+	}
 }
