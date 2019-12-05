@@ -55,6 +55,11 @@ void Client::SendDotString(std::string dotString) {
 	m_pm.Append(dm.toPacket());
 }
 
+void Client::SendChaserMessage(std::string idString) {
+	PS::ChaserMessage cm(idString);
+	m_pm.Append(cm.toPacket());
+}
+
 
 bool Client::GetString(std::string & str)
 {

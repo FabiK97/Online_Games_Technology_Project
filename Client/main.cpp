@@ -22,6 +22,8 @@ bool init();
 //Frees media and shuts down SDL
 void close();
 
+int main(int argc, char* args[]);
+
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
@@ -204,6 +206,7 @@ int main( int argc, char* args[] )
 
 				}
 
+
 				//Move the dot
 				//dot.move(SCREEN_HEIGHT, SCREEN_WIDTH);
 				player.move(SCREEN_HEIGHT, SCREEN_WIDTH);
@@ -224,6 +227,15 @@ int main( int argc, char* args[] )
 				//Sleep(5000);
 				myClient->SendDotString(player.GetDotAsString());
 				//myClient->SendString(player.GetDotAsString());
+
+				if (player.getID() == 0) {
+					if (player.Checkcollision(enemy1.GetCenterX(), enemy1.GetCenterY())) {
+						myClient->SendChaserMessage("id:1");
+					} else if(player.Checkcollision(enemy2.GetCenterX(), enemy2.GetCenterY())) {
+						myClient->SendChaserMessage("id:2");
+					}
+				}
+
 		}
 	}
 

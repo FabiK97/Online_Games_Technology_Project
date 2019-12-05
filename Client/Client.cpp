@@ -35,7 +35,7 @@ bool Client::ProcessPacketType(PacketType packetType)
 			playerDot->setID(dot.getID());
 			playerDot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
 			playerDot->isChaser = dot.isChaser;
-			//playerDot->isInit = true;
+			playerDot->isInit = true;
 		} else if (!enemy1Dot->isInit) {
 			enemy1Dot->setID(dot.getID());
 			enemy1Dot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
@@ -61,6 +61,46 @@ bool Client::ProcessPacketType(PacketType packetType)
 	case PacketType::AuthoritiveMessage: 
 	{
 		isAuthoritive = true;
+	}
+	case PacketType::ChaserMessage:
+	{
+		std::string chaserm; //string to store our message we received
+		if (!GetString(chaserm)) //Get the chat message and store it in variable: Message
+			return false; //If we do not properly get the chat message, return false
+		
+		int id;
+		stringstream  ss(chaserm);
+		string str;
+		getline(ss, str, ':');
+		string key = str;
+		getline(ss, str, ':');
+		string value = str;
+
+		if (key == "id") {
+			std::stringstream ss(value);
+			ss >> id;
+
+			if (playerDot->getID() == id) {
+				playerDot->isChaser = true;
+				enemy1Dot->isChaser = false;
+				enemy2Dot->isChaser = false;
+			} else if (enemy1Dot->getID() == id) {
+				playerDot->isChaser = false;
+				enemy1Dot->isChaser = true;
+				enemy2Dot->isChaser = false;
+			} else if (enemy2Dot->getID() == id) {
+				playerDot->isChaser = false;
+				enemy1Dot->isChaser = false;
+				enemy2Dot->isChaser = true;
+			}
+
+		}
+		else {
+			return false;
+		}
+
+		
+
 	}
 	case PacketType::FileTransferByteBuffer:
 	{
