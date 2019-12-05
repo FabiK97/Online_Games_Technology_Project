@@ -126,7 +126,7 @@ bool init()
 	}
 
 	//Init Client
-	myClient = new Client("149.153.128.85",1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
+	myClient = new Client("149.153.106.162",1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
 	//myClient = new Client("127.0.0.1", 1111);
 	if (!myClient->Connect()) //If client fails to connect...
 	{
@@ -219,6 +219,7 @@ int main( int argc, char* args[] )
 				if (enemy2.isInit) enemy2.render(gRenderer);
 				
 				myClient->SendDotString(player);
+				player.render(gRenderer);
 				//Update screen
 				SDL_RenderPresent( gRenderer );
 			
