@@ -52,4 +52,15 @@ namespace PS //Packet Structures Namespace
 		bool auth;
 	};
 
+	class ChaserMessage
+	{
+	public:
+		ChaserMessage(std::string& m);
+		std::shared_ptr<Packet> toPacket();
+	private:
+		std::string chaserString;
+
+	};
+
+
 }

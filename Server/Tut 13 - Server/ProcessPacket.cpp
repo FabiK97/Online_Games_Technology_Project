@@ -67,6 +67,28 @@ bool Server::ProcessPacket(std::shared_ptr<Connection> connection, PacketType pa
 		}
 		break;
 	}
+	case PacketType::ChaserMessage:
+	{
+		std::string message; //string to store our message we received
+		if (!GetString(connection, message)) //Get the chat message and store it in variable: Message
+			return false; //If we do not properly get the chat message, return false
+						  //Next we need to send the message out to each user
+
+		PS::ChaserMessage cm(message);
+		std::shared_ptr<Packet> msgPacket = std::make_shared<Packet>(cm.toPacket()); //use shared_ptr instead of sending with SendString so we don't have to reallocate packet for each connection
+		{
+			std::shared_lock<std::shared_mutex> lock(m_mutex_connectionMgr);
+			for (auto conn : m_connections) //For each connection...
+			{
+				if (conn == connection) //If connection is the user who sent the message...
+					continue;//Skip to the next user since there is no purpose in sending the message back to the user who sent it.
+				conn->m_pm.Append(msgPacket);
+			}
+		}
+		std::cout << "Processed chaser message packet from user: " << message << std::endl;
+		break;
+	}
+
 	case PacketType::FileTransferRequestNextBuffer:
 	{
 		if (connection->m_file.m_transferInProgress)

@@ -53,4 +53,14 @@ namespace PS
 		p->Append(PacketType::AuthoritiveMessage);
 		return p;
 	}
+	ChaserMessage::ChaserMessage(std::string& m) :chaserString(m)
+	{
+	}
+	std::shared_ptr<Packet> ChaserMessage::toPacket()
+	{
+		std::shared_ptr<Packet> p = std::make_shared<Packet>();
+		p->Append(chaserString.size());
+		p->Append(chaserString);
+		return p;
+	}
 }

@@ -25,8 +25,10 @@ bool Client::ProcessPacketType(PacketType packetType)
 		if (!GetString(dotm)) //Get the chat message and store it in variable: Message
 			return false; //If we do not properly get the chat message, return false
 		dot = processMessage(dotm);
-		
-		if (!playerDot->isInit) {
+
+		if (dot.GetCenterX() == NULL) {
+			std::cout << "x is null \n";
+		} else if (!playerDot->isInit) {
 			/*playerDot->setID(dot.getID());
 			playerDot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
 			playerDot->isChaser = dot.isChaser;
@@ -35,7 +37,7 @@ bool Client::ProcessPacketType(PacketType packetType)
 			playerDot->setID(dot.getID());
 			playerDot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
 			playerDot->isChaser = dot.isChaser;
-			//playerDot->isInit = true;
+			playerDot->isInit = true;
 		} else if (!enemy1Dot->isInit) {
 			enemy1Dot->setID(dot.getID());
 			enemy1Dot->SetPosition(dot.GetCenterX(), dot.GetCenterY());
