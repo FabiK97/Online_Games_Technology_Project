@@ -59,6 +59,7 @@ namespace PS
 	std::shared_ptr<Packet> ChaserMessage::toPacket()
 	{
 		std::shared_ptr<Packet> p = std::make_shared<Packet>();
+		p->Append(PacketType::ChaserMessage);
 		p->Append(chaserString.size());
 		p->Append(chaserString);
 		return p;
