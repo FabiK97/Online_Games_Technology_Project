@@ -14,6 +14,7 @@ public: //Public functions
 	void Disconnect();
 	void SendString(const std::string & str);
 	void SendDotString(std::string dotString);
+	void SendChaserMessage(std::string idString);
 	bool RequestFile(const std::string & fileName);
 	~Client();
 	float getY() { return yCoord; };

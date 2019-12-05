@@ -52,4 +52,13 @@ namespace PS //Packet Structures Namespace
 		std::string m_message;
 	};
 
+	class ChaserMessage
+	{
+	public:
+		ChaserMessage(std::string idString);
+		std::shared_ptr<Packet> toPacket();
+	private:
+		std::string idString;
+	};
+
 }

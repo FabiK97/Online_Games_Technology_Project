@@ -56,19 +56,17 @@ void Dot::SetPosition(int x, int y)
 //"dot.bmp"
 void Dot::Init(SDL_Renderer *gRenderer)
 {
-	if (isChaser)
+	
+	if (!gRedDotTexture.loadFromFile("ASSETS/chaserdot.bmp", gRenderer))
 	{
-		if (!gDotTexture.loadFromFile("ASSETS/chaserdot.bmp", gRenderer))
-		{
-			printf("Failed to load dot texture!\n");
-		}
+		printf("Failed to load dot texture!\n");
 	}
-	else {
-		if (!gDotTexture.loadFromFile("ASSETS/dot.bmp", gRenderer))
-		{
-			printf("Failed to load dot texture!\n");
-		}
+	
+	if (!gBlackDotTexture.loadFromFile("ASSETS/dot.bmp", gRenderer))
+	{
+		printf("Failed to load dot texture!\n");
 	}
+
 }
 
 void Dot::handleEvent(SDL_Event& e)
@@ -158,7 +156,12 @@ void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH)
 void Dot::render(SDL_Renderer *gRenderer)
 {
 	//Show the dot
-	gDotTexture.render(mPosX, mPosY, gRenderer);
+	if (isChaser) {
+		gRedDotTexture.render(mPosX, mPosY, gRenderer);
+	}
+	else {
+		gBlackDotTexture.render(mPosX, mPosY, gRenderer);
+	}
 }
 
 std::string Dot::GetPosAsString()

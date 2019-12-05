@@ -62,12 +62,15 @@ private:
 	//The X and Y offsets of the dot
 	int mPosX, mPosY;
 
-	int width, height;
+	int width = 20;
+	int height = 20;
 	SDL_Colour color;
 
 	int mCenterX, mCenterY;
 	//The velocity of the dot
 	int mVelX, mVelY;
 
-	LTexture gDotTexture;
+	LTexture gBlackDotTexture;
+	LTexture gRedDotTexture;
+
 };
