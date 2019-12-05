@@ -28,13 +28,19 @@ namespace PS
 	{
 	}
 
+	DotMessage::DotMessage(std::string dotString) :dString(dotString)
+	{
+	}
+
 	std::shared_ptr<Packet> DotMessage::toPacket()
 	{
 		std::shared_ptr<Packet> p = std::make_shared<Packet>();
-		std::string dotString = dot.GetDotAsString();
+		if (dString.size() <= 0) {
+		 dString = dot.GetDotAsString();
+		}
 		p->Append(PacketType::DotMessage);
-		p->Append(dotString.size());
-		p->Append(dotString);
+		p->Append(dString.size());
+		p->Append(dString);
 		return p;
 	}
 	AuthoritiveMessage::AuthoritiveMessage(const std::string& str) :m_message(str)

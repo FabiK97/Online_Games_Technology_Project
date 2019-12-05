@@ -50,8 +50,8 @@ void Client::SendString(const std::string & str)
 	m_pm.Append(cm.toPacket());
 }
 
-void Client::SendDotString(Dot dot) {
-	PS::DotMessage dm(dot);
+void Client::SendDotString(std::string dotString) {
+	PS::DotMessage dm(dotString);
 	m_pm.Append(dm.toPacket());
 }
 

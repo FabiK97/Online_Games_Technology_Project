@@ -125,16 +125,6 @@ bool init()
 		}
 	}
 
-	//Init Client
-	myClient = new Client("149.153.128.85",1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
-	//myClient = new Client("127.0.0.1", 1111);
-	if (!myClient->Connect()) //If client fails to connect...
-	{
-		std::cout << "Failed to connect to server..." << std::endl;
-		system("pause");
-		return -1;
-	}
-
 	return success;
 }
 
@@ -156,8 +146,23 @@ void close()
 
 int main( int argc, char* args[] )
 {
+
+	//Init Client
+	myClient = new Client("149.153.106.162", 1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
+	myClient->playerDot = &player;
+	myClient->enemy1Dot = &enemy1;
+	myClient->enemy2Dot = &enemy2;
+	//myClient = new Client("127.0.0.1", 1111);
+	if (!myClient->Connect()) //If client fails to connect...
+	{
+		std::cout << "Failed to connect to server..." << std::endl;
+		system("pause");
+		return -1;
+	}
+
+
 	//Start up SDL and create window
-	if( !init() )
+	if(!init())
 	{
 		printf( "Failed to initialize!\n" );
 	}
@@ -171,10 +176,6 @@ int main( int argc, char* args[] )
 
 			//The dot that will be moving around on the screen
 
-
-			myClient->playerDot = &player;
-			myClient->enemy1Dot = &enemy1;
-			myClient->enemy2Dot = &enemy2;
 			player.Init(gRenderer);
 			enemy1.Init(gRenderer);
 			enemy2.Init(gRenderer);
@@ -218,10 +219,12 @@ int main( int argc, char* args[] )
 				if (enemy1.isInit) enemy1.render(gRenderer);
 				if (enemy2.isInit) enemy2.render(gRenderer);
 				
-				myClient->SendDotString(player);
+
 				//Update screen
 				SDL_RenderPresent( gRenderer );
-			
+				//Sleep(5000);
+				myClient->SendDotString(player.GetDotAsString());
+				//myClient->SendString(player.GetDotAsString());
 		}
 	}
 
