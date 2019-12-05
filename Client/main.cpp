@@ -219,7 +219,6 @@ int main( int argc, char* args[] )
 				if (enemy1.isInit) enemy1.render(gRenderer);
 				if (enemy2.isInit) enemy2.render(gRenderer);
 				
-
 				//Update screen
 				SDL_RenderPresent( gRenderer );
 				//Sleep(5000);
