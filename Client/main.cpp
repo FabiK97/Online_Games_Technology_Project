@@ -80,7 +80,6 @@ bool init()
 {
 	//Initialization flag
 	bool success = true;
-
 	//Initialize SDL
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -150,10 +149,11 @@ int main( int argc, char* args[] )
 {
 
 	//Init Client
-	myClient = new Client("149.153.106.162", 1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
+	myClient = new Client("149.153.136.242", 1111); //Create client to connect to server 127.0.0.1 [localhost] on port 1111
 	myClient->playerDot = &player;
 	myClient->enemy1Dot = &enemy1;
 	myClient->enemy2Dot = &enemy2;
+	int timer = 0;
 	//myClient = new Client("127.0.0.1", 1111);
 	if (!myClient->Connect()) //If client fails to connect...
 	{
@@ -229,10 +229,34 @@ int main( int argc, char* args[] )
 				//myClient->SendString(player.GetDotAsString());
 
 				if (player.getID() == 0) {
-					if (player.Checkcollision(enemy1.GetCenterX(), enemy1.GetCenterY())) {
+					if (timer > 0) {
+						timer -= 1;
+						
+					}else if (player.Checkcollision(enemy1.GetCenterX(), enemy1.GetCenterY())) {
+						if (player.isChaser) {
 						myClient->SendChaserMessage("id:1");
+						timer = 200;
+						} else {
+							myClient->SendChaserMessage("id:0");
+							timer = 200;
+						}
 					} else if(player.Checkcollision(enemy2.GetCenterX(), enemy2.GetCenterY())) {
-						myClient->SendChaserMessage("id:2");
+						if (player.isChaser) {
+							myClient->SendChaserMessage("id:2");
+							timer = 200;
+						} else {
+							myClient->SendChaserMessage("id:0");
+							timer = 200;
+						}
+					}
+					else if (enemy1.Checkcollision(enemy2.GetCenterX(), enemy2.GetCenterY())) {
+						if (enemy1.isChaser) {
+							myClient->SendChaserMessage("id:2");
+							timer = 200;
+						} else {
+							myClient->SendChaserMessage("id:1");
+							timer = 200;
+						}
 					}
 				}
 
